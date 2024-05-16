@@ -2,10 +2,7 @@ import gradio as gr
 import json
 import os
 
-DATA_FILE = 'survey_data.json'
-
-# Sample data structure if the file doesn't exist
-sample_data = {
+data = {
     "active": 2,
     "questions": [
         {"id": 1, "question": "Do you like it?", "yes": 12, "no": 4},
@@ -13,15 +10,19 @@ sample_data = {
     ]
 }
 
+store = gr.State(data)
 
-data = sample_data
 
 with gr.Blocks() as demo:
 
     gr.Markdown("### Active Question")
-    with gr.Group():
-        active_dropdown = gr.Dropdown(label="Select the active question", choices=[
-            (item['question'], item['id']) for item in data["questions"]], value=data["active"], interactive=True)
+    active_dropdown = gr.Dropdown(label="Select the active question", choices=[
+        (item['question'], item['id']) for item in data["questions"]], value=data["active"], interactive=True)
+
+    def update_active(active):
+        print("Active question updated to", active)
+
+    active_dropdown.change(update_active, inputs=[active_dropdown])
 
     gr.Markdown("### Questions")
 
