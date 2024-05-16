@@ -5,54 +5,19 @@
 
 ```bash
 sudo apt-get install hostapd dnsmasq
-```
-
-```bash
-sudo cp linux/hostapd.conf /etc/hostapd/hostapd.conf
-sudo cp linux/wlan0 /etc/network/interfaces.d/wlan0
-cat linux/hostapd >> /etc/default/hostapd
-cat linux/dnsmasq.conf >> /etc/dnsmasq.conf
-cat linux/dhcpcd.conf >> /etc/dhcpcd.conf
+sudo cp linux/hotspot/hostapd.conf /etc/hostapd/hostapd.conf
+sudo cp linux/hotspot/wlan0 /etc/network/interfaces.d/wlan0
+cat linux/hotspot/hostapd >> /etc/default/hostapd
+cat linux/hotspot/dnsmasq.conf >> /etc/dnsmasq.conf
+cat linux/hotspot/dhcpcd.conf >> /etc/dhcpcd.conf
 ```
 
 ```bash
 sudo systemctl unmask hostapd
 sudo systemctl enable hostapd
 sudo systemctl enable dnsmasq
-```
-
-```bash
 sudo reboot
 ```
-
-```bash
-sudo iptables -t nat -A POSTROUTING -o eth0 -j MASQUERADE
-sudo iptables -A FORWARD -i eth0 -o wlan0 -m state --state RELATED,ESTABLISHED -j ACCEPT
-sudo iptables -A FORWARD -i wlan0 -o eth0 -j ACCEPT
-sudo sh -c "iptables-save > /etc/iptables.ipv4.nat"
-```
-
-```bash
-sudo nano /etc/rc.local
-```
-
-Add the following line before `exit 0`:
-
-```bash
-iptables-restore < /etc/iptables.ipv4.nat
-```
-
-```bash
-sudo reboot
-```
-
-```bash
-sudo apt-get install git
-git clone
-```
-
-```bash
-
 
 
 ## Installation of the Pimoroni Automation HAT
