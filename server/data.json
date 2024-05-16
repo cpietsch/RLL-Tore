@@ -1,0 +1,18 @@
+{
+  "active": 1,
+  "last_id": 2,
+  "questions": [
+    {
+      "id": 1,
+      "question": "test",
+      "yes": 0,
+      "no": 0
+    },
+    {
+      "id": 2,
+      "question": "test2",
+      "yes": 0,
+      "no": 0
+    }
+  ]
+}

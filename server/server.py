@@ -1,53 +1,136 @@
-import gradio as gr
 import json
-import os
+from fastapi import FastAPI, WebSocket, WebSocketDisconnect
+from fastapi.responses import HTMLResponse
+from typing import List, Dict
+from pydantic import BaseModel
+import uvicorn
 
-data = {
-    "active": 2,
-    "questions": [
-        {"id": 1, "question": "Do you like it?", "yes": 12, "no": 4},
-        {"id": 2, "question": "Is the sky blue?", "yes": 1, "no": 6}
-    ]
-}
+app = FastAPI()
 
-store = gr.State(data)
+DATA_FILE = "data.json"
 
 
-with gr.Blocks() as demo:
+class Question(BaseModel):
+    id: int
+    question: str
+    yes: int = 0
+    no: int = 0
 
-    gr.Markdown("### Active Question")
-    active_dropdown = gr.Dropdown(label="Select the active question", choices=[
-        (item['question'], item['id']) for item in data["questions"]], value=data["active"], interactive=True)
 
-    def update_active(active):
-        print("Active question updated to", active)
+class Data(BaseModel):
+    active: int = 0
+    last_id: int = 0
+    questions: List[Question] = []
 
-    active_dropdown.change(update_active, inputs=[active_dropdown])
 
-    gr.Markdown("### Questions")
+class Connections():
+    connections: List[WebSocket] = []
 
-    for index, item in enumerate(data["questions"]):
-        with gr.Group():
-            with gr.Column():
-                with gr.Row():
-                    gr.Textbox(value=item['question'],
-                               interactive=True, label='question', scale=3, lines=3)
+    def add_connection(self, websocket: WebSocket):
+        self.connections.append(websocket)
 
-                    with gr.Row():
-                        gr.Number(value=item['yes'],
-                                  interactive=True, label='yes')
-                        gr.Number(value=item['no'],
-                                  interactive=True, label='no')
-                    gr.Label(
-                        value=lambda: f"{item['yes'] + item['no']}", label='total')
-                    delete_button = gr.Button(value='Delete')
+    def remove_connection(self, websocket: WebSocket):
+        self.connections.remove(websocket)
 
-    gr.Markdown("### New Question")
+    async def broadcast(self, data: Dict):
+        for connection in self.connections:
+            await connection.send_json(data)
 
-    with gr.Group():
-        gr.Textbox(label="question")
-        add_button = gr.Button(value='Add')
 
+def load_data() -> Data:
+    try:
+        with open(DATA_FILE, "r") as f:
+            return Data(**json.load(f))
+    except FileNotFoundError:
+        return Data()
+
+
+def save_data(data: Data):
+    with open(DATA_FILE, "w") as f:
+        json.dump(data.model_dump(), f, indent=2)
+
+
+data = load_data()
+connections = Connections()
+
+
+@app.websocket("/ws")
+async def websocket_endpoint(websocket: WebSocket):
+    await websocket.accept()
+    connections.add_connection(websocket)
+
+    try:
+        await websocket.send_json(data.model_dump())
+
+        while True:
+            message = await websocket.receive_json()
+            action = message.get("action")
+            if action == "update_votes":
+                question_id = message["id"]
+                yes = message["yes"]
+                no = message["no"]
+                for q in data.questions:
+                    if q.id == question_id:
+                        q.yes = yes
+                        q.no = no
+                        break
+            elif action == "add_question":
+                data.last_id += 1
+                new_question = Question(
+                    id=data.last_id, question=message["question"])
+
+                data.questions.append(new_question)
+            elif action == "delete_question":
+                question_id = message["id"]
+                data.questions = [
+                    q for q in data.questions if q.id != question_id]
+            elif action == "set_active":
+                data.active = message["id"]
+
+            save_data(data)
+            # Broadcast updated data
+            # await websocket.send_json(data.model_dump_json())
+            await connections.broadcast(data.model_dump())
+
+    except WebSocketDisconnect:
+        connections.remove_connection(websocket)
+        pass
+
+
+html = """
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>WebSocket Example</title>
+    </head>
+    <body>
+        <h1>WebSocket Example</h1>
+        <ul id="questions"></ul>
+        <script>
+            let ws = new WebSocket("ws://localhost:8000/ws");
+            ws.onmessage = function(event) {
+                let data = JSON.parse(event.data);
+                let active = data.active;
+                console.log(data);
+                let questions = document.getElementById("questions");
+                questions.innerHTML = "";
+                data.questions.forEach(question => {
+                    let li = document.createElement("li");
+                    li.textContent = `${question.question} - Yes: ${question.yes}, No: ${question.no}, active: ${active === question.id}`;
+                    questions.appendChild(li);
+                });
+            };
+            // Send messages from your frontend here
+        </script>
+       
+    </body>
+</html>
+"""
+
+
+@app.get("/")
+async def get():
+    return HTMLResponse(html)
 
 if __name__ == "__main__":
-    demo.launch()
+    uvicorn.run("server:app", host="0.0.0.0", port=8000, reload=True)
