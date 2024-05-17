@@ -1,6 +1,6 @@
 {
-  "active": 1,
-  "last_id": 2,
+  "active": 2,
+  "last_id": 3,
   "questions": [
     {
       "id": 1,
@@ -11,6 +11,12 @@
     {
       "id": 2,
       "question": "test2",
+      "yes": 0,
+      "no": 0
+    },
+    {
+      "id": 3,
+      "question": "asd",
       "yes": 0,
       "no": 0
     }

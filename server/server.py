@@ -101,11 +101,87 @@ html = """
 <!DOCTYPE html>
 <html>
     <head>
-        <title>WebSocket Example</title>
+        <title>Tor Admin</title>
+        <style>
+            body {
+                font-family: Arial, sans-serif;
+            }
+            h1 {
+                color: #333;
+            }
+            ul {
+                list-style-type: none;
+                padding: 0;
+            }
+            li {
+                margin: 10px 0;
+            }
+            form {
+                margin-top: 20px;
+                display: grid;
+                grid-template-columns: 2fr 1fr;
+                gap: 1em;
+            }
+            input[type="text"] {
+                padding: 5px;
+                font-size: 16px;
+            }
+            button {
+                padding: 5px 10px;
+                font-size: 16px;
+                background-color: #333;
+                color: white;
+                border: none;
+                cursor: pointer;
+            }
+            select {
+                padding: 5px;
+                font-size: 16px;
+            }
+            container {
+                display: flex;
+                flex-direction: column;
+                max-width: 800px;
+                margin: 0 auto;
+            }
+
+            question {
+                display: grid;
+                grid-template-columns: 4fr 1fr 1fr;
+                border-radius: 5px;
+                padding: 10px;
+                margin: 10px 0;
+            }
+            question.active {
+                border: 1px solid #333;
+            }
+            question span {
+                justify-self: center;
+            }
+            question span:first-child {
+                justify-self: start;
+            }
+
+        </style>
     </head>
     <body>
-        <h1>WebSocket Example</h1>
-        <ul id="questions"></ul>
+    <container>
+        <h1>Tor Admin</h1>
+        <div id="questions"></div>
+        
+        <form id="active_form">
+            <select id="active">
+            </select>
+            <button type="submit">Set Active</button>
+        </form>
+
+        <form id="form">
+            <input type="text" id="question" placeholder="Enter your question" required>
+            <button type="submit">Add Question</button>
+        </form>
+
+    </container>
+
         <script>
             let ws = new WebSocket("ws://localhost:8000/ws");
             ws.onmessage = function(event) {
@@ -115,12 +191,49 @@ html = """
                 let questions = document.getElementById("questions");
                 questions.innerHTML = "";
                 data.questions.forEach(question => {
-                    let li = document.createElement("li");
-                    li.textContent = `${question.question} - Yes: ${question.yes}, No: ${question.no}, active: ${active === question.id}`;
-                    questions.appendChild(li);
+                    let div = document.createElement("question");
+                    div.className = question.id === active ? "active" : "";
+                    let q = document.createElement("span");
+                    q.textContent = question.question;
+                    let yes = document.createElement("span");
+                    yes.textContent = `Yes: ${question.yes}`;
+                    let no = document.createElement("span");
+                    no.textContent = `No: ${question.no}`;
+                    div.appendChild(q);
+                    div.appendChild(yes);
+                    div.appendChild(no);
+
+                    questions.appendChild(div);
+                });
+
+                // add options to select
+                let select = document.getElementById("active")
+                select.innerHTML = "";
+                data.questions.forEach(question => {
+                    let option = document.createElement("option");
+                    option.textContent = question.question;
+                    option.value = question.id;
+                    if (question.id === active) {
+                        option.selected = true;
+                    }
+                    select.appendChild(option);
                 });
             };
-            // Send messages from your frontend here
+            
+            document.getElementById("form").onsubmit = function(event) {
+                event.preventDefault();
+                let question = document.getElementById("question").value;
+                ws.send(JSON.stringify({action: "add_question", question: question}));
+                document.getElementById("question").value = "";
+            };
+
+            document.getElementById("active_form").onsubmit = function(event) {
+                event.preventDefault();
+                let active = document.getElementById("active").value;
+                ws.send(JSON.stringify({action: "set_active", id: parseInt(active)}));
+            };
+
+
         </script>
        
     </body>
