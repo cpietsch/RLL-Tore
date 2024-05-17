@@ -54,3 +54,19 @@ Add the following lines to `/boot/config.txt`:
 hdmi_group=1
 hdmi_mode=1
 ```
+
+
+## Setup Kiosk Mode
+
+```bash
+sudo apt-get install unclutter
+sudo cp linux/kiosk/kiosk.service /etc/systemd/system/kiosk.service
+sudo systemctl enable kiosk
+sudo reboot
+```
+
+Open Chromium manually
+    
+```bash
+DISPLAY=:0 /usr/bin/chromium-browser --noerrdialogs --disable-infobars --app="http://localhost:8000/screen" --user-data-dir=$(mktemp -d) --enable-features=OverlayScrollbar  --disable-pinch --kiosk 
+```
