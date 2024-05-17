@@ -1,14 +1,19 @@
 import json
+import time
 from fastapi import FastAPI, WebSocket, WebSocketDisconnect
 from fastapi.responses import HTMLResponse
+from contextlib import asynccontextmanager
 from typing import List, Dict
 from pydantic import BaseModel
 import uvicorn
+import asyncio
+import automationhat
+
 
 app = FastAPI()
 
 DATA_FILE = "data.json"
-
+DEBOUNCE = 1
 
 class Question(BaseModel):
     id: int
@@ -21,6 +26,13 @@ class Data(BaseModel):
     active: int = 0
     last_id: int = 0
     questions: List[Question] = []
+
+
+class VoteState(BaseModel):
+    state: int = 0
+    count: int = 0
+    time: float = 0
+    last: float = 0
 
 
 class Connections():
@@ -50,12 +62,77 @@ def save_data(data: Data):
         json.dump(data.model_dump(), f, indent=2)
 
 
+def get_yes_no(data: Data) -> Dict:
+    yes = 0
+    no = 0
+    for q in data.questions:
+        if q.id == data.active:
+            yes = q.yes
+            no = q.no
+            break
+    return {"yes": yes, "no": no}
+
+async def add_vote_active(yes = 0, no = 0):
+    for q in data.questions:
+        if q.id == data.active:
+            q.yes += yes
+            q.no += no
+            break
+    # broadcast updated data
+    await connections.broadcast(data.model_dump())
+
 data = load_data()
 connections = Connections()
 
+tor1_state = VoteState(count=get_yes_no(data)["yes"])
+tor2_state = VoteState(count=get_yes_no(data)["no"])
+
+async def input_counter_loop():
+    # global tor1_state, tor2_state
+    while True:
+        tor1 = automationhat.input.one.read()
+        tor2 = automationhat.input.two.read()
+
+        if tor1 and tor1_state.state == 0 and time.time() - tor1_state.time > DEBOUNCE:
+            tor1_state.count += 1
+            tor1_state.last = time.time()
+            print("TOR1: {}".format(tor1_state.count))
+            automationhat.light.warn.on()
+            await add_vote_active(yes=1)
+
+        if tor1_state.last and time.time() - tor1_state.last > 0.5:
+            automationhat.light.warn.off()
+            tor1_state.last = 0
+
+        if tor1 != tor1_state.state:
+            tor1_state.time = time.time()
+            tor1_state.state = tor1
+
+        if tor2 and tor2_state.state == 0 and time.time() - tor2_state.time > DEBOUNCE:
+            tor2_state.count += 1
+            tor2_state.last = time.time()
+            print("TOR2: {}".format(tor2_state.count))
+            automationhat.light.comms.on()
+            await add_vote_active(no=1)
+
+        if tor2_state.last and time.time() - tor2_state.last > 0.5:
+            automationhat.light.comms.off()
+            tor2_state.last = 0
+
+        if tor2 != tor2_state.state:
+            tor2_state.time = time.time()
+            tor2_state.state = tor2
+
+        await asyncio.sleep(0.02)
+
+@app.on_event("startup")
+async def start_background_tasks():
+    # Start the input counter loop in the background
+    asyncio.create_task(input_counter_loop())
 
 @app.websocket("/ws")
 async def websocket_endpoint(websocket: WebSocket):
+    # global tor1_state, tor2_state
     await websocket.accept()
     connections.add_connection(websocket)
 
@@ -86,6 +163,8 @@ async def websocket_endpoint(websocket: WebSocket):
                     q for q in data.questions if q.id != question_id]
             elif action == "set_active":
                 data.active = message["id"]
+                # tor1_state = VoteState(count=get_yes_no(data)["yes"])
+                # tor2_state = VoteState(count=get_yes_no(data)["no"])
 
             save_data(data)
             # Broadcast updated data
@@ -189,7 +268,7 @@ html_admin = """
     </container>
 
         <script>
-            let ws = new WebSocket("ws://localhost:8000/ws");
+            let ws = new WebSocket("ws://tor.local:8000/ws");
             ws.onmessage = function(event) {
                 let data = JSON.parse(event.data);
                 let active = data.active;

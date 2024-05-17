@@ -1,6 +1,6 @@
 {
-  "active": 5,
-  "last_id": 5,
+  "active": 7,
+  "last_id": 7,
   "questions": [
     {
       "id": 4,
@@ -11,6 +11,18 @@
     {
       "id": 5,
       "question": "Ok ok",
+      "yes": 9,
+      "no": 2
+    },
+    {
+      "id": 6,
+      "question": "Diggs was",
+      "yes": 3,
+      "no": 0
+    },
+    {
+      "id": 7,
+      "question": "Deine mutter",
       "yes": 0,
       "no": 0
     }

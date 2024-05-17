@@ -59,6 +59,7 @@ hdmi_mode=1
 ## Setup Kiosk Mode
 
 ```bash
+sudo mv linux/kiosk/splash.png /usr/share/plymouth/themes/pix/splash.png
 sudo apt-get install unclutter
 sudo cp linux/kiosk/kiosk.service /etc/systemd/system/kiosk.service
 sudo systemctl enable kiosk
