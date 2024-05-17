@@ -44,3 +44,13 @@ git clone https://github.com/cpietsch/RLL-Tore
 cd RLL-Tore
 pip install -r server/requirements.txt
 ```
+
+
+## Enable HDMI Mirroring
+
+Add the following lines to `/boot/config.txt`:
+
+```txt
+hdmi_group=1
+hdmi_mode=1
+```
