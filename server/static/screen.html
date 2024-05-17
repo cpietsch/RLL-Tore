@@ -22,11 +22,49 @@
             color: #fff;
             font-weight: bold;
         }
+
+        #yes {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            font-size: 4em;
+            background-color: #0f0;
+            color: #000;
+            font-weight: bold;
+            padding: 1em;
+            position: absolute;
+            top: -50px;
+            left: -50px;
+            width: 100px;
+            height: 100px;
+            border-radius: 4em;
+        }
+
+        #no {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            font-size: 4em;
+            background-color: rgb(255, 0, 170);
+            color: #000;
+            font-weight: bold;
+            padding: 1em;
+            position: absolute;
+            top: -50px;
+            right: -50px;
+            width: 100px;
+            height: 100px;
+            border-radius: 4em;
+        }
     </style>
 </head>
 
 <body>
     <div id="question"></div>
+    <div id="yes"></div>
+    <div id="no"></div>
 
     <script>
         let ws = new WebSocket("ws://tor.local/ws");
@@ -37,6 +75,13 @@
             let questions = document.getElementById("question");
             let active_question = data.questions.find(q => q.id === active);
             questions.innerHTML = active_question.question;
+
+            let yes = document.getElementById("yes");
+            yes.innerHTML = active_question.yes;
+
+            let no = document.getElementById("no");
+            no.innerHTML = active_question.no;
+
         };
 
     </script>
