@@ -77,9 +77,11 @@ async def add_vote_active(yes = 0, no = 0):
         if q.id == data.active:
             q.yes += yes
             q.no += no
+            print("YES: {}, NO: {}, {}".format(q.yes, q.no, q.question))
             break
     # broadcast updated data
     await connections.broadcast(data.model_dump())
+    save_data(data)
 
 data = load_data()
 connections = Connections()
@@ -96,7 +98,7 @@ async def input_counter_loop():
         if tor1 and tor1_state.state == 0 and time.time() - tor1_state.time > DEBOUNCE:
             tor1_state.count += 1
             tor1_state.last = time.time()
-            print("TOR1: {}".format(tor1_state.count))
+            # print("TOR1: {}".format(tor1_state.count))
             automationhat.light.warn.on()
             await add_vote_active(yes=1)
 
@@ -111,7 +113,7 @@ async def input_counter_loop():
         if tor2 and tor2_state.state == 0 and time.time() - tor2_state.time > DEBOUNCE:
             tor2_state.count += 1
             tor2_state.last = time.time()
-            print("TOR2: {}".format(tor2_state.count))
+            # print("TOR2: {}".format(tor2_state.count))
             automationhat.light.comms.on()
             await add_vote_active(no=1)
 
