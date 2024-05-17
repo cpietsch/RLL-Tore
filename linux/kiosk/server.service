@@ -1,0 +1,10 @@
+[Unit]
+Description=Python Server
+After=network.target
+
+[Service]
+User=root
+ExecStart=/home/pi/.virtualenvs/pimoroni/bin/python /home/pi/RLL-Tore/server/server.py
+
+[Install]
+WantedBy=multi-user.target

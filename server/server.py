@@ -9,11 +9,14 @@ import uvicorn
 import asyncio
 import automationhat
 from fastapi.staticfiles import StaticFiles
+import os
 
+script_dir = os.path.dirname(__file__)
+st_abs_file_path = os.path.join(script_dir, "static/")
 
 app = FastAPI()
 
-DATA_FILE = "data.json"
+DATA_FILE = os.path.join(script_dir, "data.json")
 DEBOUNCE = 1
 
 class Question(BaseModel):
@@ -178,8 +181,7 @@ async def websocket_endpoint(websocket: WebSocket):
         connections.remove_connection(websocket)
         pass
 
-
-app.mount("/", StaticFiles(directory="static",html = True), name="static")
+app.mount("/", StaticFiles(directory=st_abs_file_path, html=True), name="static")
 
 if __name__ == "__main__":
-    uvicorn.run("server:app", host="0.0.0.0", port=8000, reload=True)
+    uvicorn.run("server:app", host="0.0.0.0", port=80, reload=True)

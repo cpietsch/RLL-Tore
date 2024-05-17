@@ -59,15 +59,19 @@ hdmi_mode=1
 ## Setup Kiosk Mode
 
 ```bash
+cd ~/RLL-Tore
 sudo mv linux/kiosk/splash.png /usr/share/plymouth/themes/pix/splash.png
 sudo apt-get install unclutter
 sudo cp linux/kiosk/kiosk.service /etc/systemd/system/kiosk.service
+sudo cp linux/kiosk/server.service /etc/systemd/system/server.service
 sudo systemctl enable kiosk
+sudo systemctl enable server
+sudo cp linux/kiosk/.xsession ~/
 sudo reboot
 ```
 
 Open Chromium manually
     
 ```bash
-DISPLAY=:0 /usr/bin/chromium-browser --noerrdialogs --disable-infobars --app="http://localhost:8000/screen" --user-data-dir=$(mktemp -d) --enable-features=OverlayScrollbar  --disable-pinch --kiosk 
+DISPLAY=:0 /usr/bin/chromium-browser --noerrdialogs --disable-infobars --app="http://localhost:8000/screen.html" --user-data-dir=$(mktemp -d) --enable-features=OverlayScrollbar  --disable-pinch --kiosk 
 ```

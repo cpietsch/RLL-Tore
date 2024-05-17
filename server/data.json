@@ -1,12 +1,18 @@
 {
-  "active": 11,
-  "last_id": 11,
+  "active": 12,
+  "last_id": 12,
   "questions": [
     {
       "id": 11,
       "question": "asd",
       "yes": 2,
       "no": 2
+    },
+    {
+      "id": 12,
+      "question": "Diggs was",
+      "yes": 0,
+      "no": 0
     }
   ]
 }
