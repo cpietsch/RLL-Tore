@@ -1,30 +1,12 @@
 {
-  "active": 9,
-  "last_id": 9,
+  "active": 11,
+  "last_id": 11,
   "questions": [
     {
-      "id": 4,
-      "question": "Was willst du ?",
-      "yes": 0,
-      "no": 0
-    },
-    {
-      "id": 7,
-      "question": "Deine mutter",
-      "yes": 7,
-      "no": 0
-    },
-    {
-      "id": 8,
-      "question": "Eine Lange frage kannst du auch stellen. Jaja ?",
-      "yes": 0,
-      "no": 0
-    },
-    {
-      "id": 9,
-      "question": "Was willst du ?",
-      "yes": 0,
-      "no": 0
+      "id": 11,
+      "question": "asd",
+      "yes": 2,
+      "no": 2
     }
   ]
 }
