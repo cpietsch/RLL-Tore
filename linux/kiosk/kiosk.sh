@@ -3,6 +3,8 @@ xset s noblank
 xset s off
 xset -dpms
 
+DISPLAY=:0 xrandr --output HDMI-2 --same-as HDMI-1 &
+
 unclutter -idle 0.5 -root &
 
 sed -i 's/"exited_cleanly":false/"exited_cleanly":true/' /home/$USER/.config/chromium/Default/Preferences

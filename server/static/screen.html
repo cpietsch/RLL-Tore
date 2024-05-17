@@ -29,7 +29,7 @@
     <div id="question"></div>
 
     <script>
-        let ws = new WebSocket("ws://localhost:8000/ws");
+        let ws = new WebSocket("ws://tor.local/ws");
         ws.onmessage = function (event) {
             let data = JSON.parse(event.data);
             let active = data.active;
