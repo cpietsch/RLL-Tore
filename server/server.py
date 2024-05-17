@@ -175,6 +175,12 @@ html = """
             <button type="submit">Set Active</button>
         </form>
 
+        <form id="delete_form">
+            <select id="delete">
+            </select>
+            <button type="submit">Delete Question</button>
+        </form>
+
         <form id="form">
             <input type="text" id="question" placeholder="Enter your question" required>
             <button type="submit">Add Question</button>
@@ -209,6 +215,8 @@ html = """
                 // add options to select
                 let select = document.getElementById("active")
                 select.innerHTML = "";
+                let delete_select = document.getElementById("delete")
+                delete_select.innerHTML = "";
                 data.questions.forEach(question => {
                     let option = document.createElement("option");
                     option.textContent = question.question;
@@ -217,6 +225,7 @@ html = """
                         option.selected = true;
                     }
                     select.appendChild(option);
+                    delete_select.appendChild(option.cloneNode(true));
                 });
             };
             
@@ -233,6 +242,11 @@ html = """
                 ws.send(JSON.stringify({action: "set_active", id: parseInt(active)}));
             };
 
+            document.getElementById("delete_form").onsubmit = function(event) {
+                event.preventDefault();
+                let delete_question = document.getElementById("delete").value;
+                ws.send(JSON.stringify({action: "delete_question", id: parseInt(delete_question)}));
+            };
 
         </script>
        
