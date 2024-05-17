@@ -97,7 +97,7 @@ async def websocket_endpoint(websocket: WebSocket):
         pass
 
 
-html = """
+html_admin = """
 <!DOCTYPE html>
 <html>
     <head>
@@ -254,10 +254,61 @@ html = """
 </html>
 """
 
+html_screen = """
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Tor Screen</title>
+        <style>
+            body {
+                font-family: sans-serif;
+                padding: 0;
+                margin: 0;
+            }
+            
+            #question {
+                display: flex;
+                flex-direction: column;
+                width: 100vw;
+                height: 100vh;
+                justify-content: center;
+                align-items: center;
+                font-size: 4em;
+                background-color: #000;
+                color: #fff;
+                font-weight: bold;
+            }
+        </style>
+    </head>
+    <body>
+        <div id="question"></div>
+
+        <script>
+            let ws = new WebSocket("ws://localhost:8000/ws");
+            ws.onmessage = function(event) {
+                let data = JSON.parse(event.data);
+                let active = data.active;
+                
+                let questions = document.getElementById("question");
+                let active_question = data.questions.find(q => q.id === active);
+                questions.innerHTML = active_question.question;
+            };
+
+        </script>
+       
+    </body>
+</html>
+"""
+
 
 @app.get("/")
 async def get():
-    return HTMLResponse(html)
+    return HTMLResponse(html_admin)
+
+
+@app.get("/screen")
+async def get():
+    return HTMLResponse(html_screen)
 
 if __name__ == "__main__":
     uvicorn.run("server:app", host="0.0.0.0", port=8000, reload=True)
