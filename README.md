@@ -1,5 +1,10 @@
 # RLL-Tore
 
+## Webinterface WIFI Hotspot
+
+- WLAN name: tor
+- WLAN PW: raumlichtlabor
+- Webinterface: http://tor.local
 
 ## Installation of Hotspot on the Raspberry Pi Bullseye
 
@@ -80,4 +85,13 @@ Open Chromium manually
     
 ```bash
 DISPLAY=:0 /usr/bin/chromium-browser --noerrdialogs --disable-infobars --app="http://localhost:8000/screen.html" --user-data-dir=$(mktemp -d) --enable-features=OverlayScrollbar  --disable-pinch --kiosk 
+```
+
+
+## SSH into the Raspberry Pi
+
+PW: hanshans
+
+```bash
+ssh -l pi tor.local
 ```
