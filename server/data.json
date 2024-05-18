@@ -1,12 +1,18 @@
 {
   "active": 16,
-  "last_id": 16,
+  "last_id": 17,
   "questions": [
     {
       "id": 16,
       "question": "Sollte Krieg illegal sein?",
-      "yes": 22,
-      "no": 21
+      "yes": 3,
+      "no": 30
+    },
+    {
+      "id": 17,
+      "question": "asdads",
+      "yes": 2,
+      "no": 0
     }
   ]
 }

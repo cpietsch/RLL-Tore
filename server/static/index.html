@@ -111,6 +111,14 @@
             <button type="submit">Add Question</button>
         </form>
 
+        <form id="change_votes">
+            <label for="change">Change Votes</label>
+            <select id="change"></select>
+            <input type="number" id="yes" placeholder="Yes Votes" required>
+            <input type="number" id="no" placeholder="No Votes" required>
+            <button type="submit">Change Votes</button>
+        </form>
+
         <form id="delete_form">
             <label for="delete">Delete Question</label>
             <select id="delete"></select>
@@ -153,6 +161,24 @@
                 select.appendChild(option);
                 delete_select.appendChild(option.cloneNode(true));
             });
+
+            let change_select = document.getElementById("change")
+            change_select.innerHTML = "";
+            data.questions.forEach(question => {
+                let option = document.createElement("option");
+                option.textContent = question.question;
+                option.value = question.id;
+                change_select.appendChild(option);
+            });
+            // eventlister vor change_select
+            change_select.addEventListener("change", function () {
+                let selected = data.questions.find(q => q.id === parseInt(change_select.value));
+                document.getElementById("yes").value = selected.yes;
+                document.getElementById("no").value = selected.no;
+            });
+
+            document.getElementById("yes").value = data.questions[0].yes;
+            document.getElementById("no").value = data.questions[0].no;
         };
 
         document.getElementById("form").onsubmit = function (event) {
@@ -166,6 +192,14 @@
             event.preventDefault();
             let active = document.getElementById("active").value;
             ws.send(JSON.stringify({ action: "set_active", id: parseInt(active) }));
+        };
+
+        document.getElementById("change_votes").onsubmit = function (event) {
+            event.preventDefault();
+            let change = document.getElementById("change").value;
+            let yes = document.getElementById("yes").value;
+            let no = document.getElementById("no").value;
+            ws.send(JSON.stringify({ action: "update_votes", id: parseInt(change), yes: parseInt(yes), no: parseInt(no) }));
         };
 
         document.getElementById("delete_form").onsubmit = function (event) {
