@@ -19,6 +19,13 @@ sudo systemctl enable dnsmasq
 sudo reboot
 ```
 
+## Change wifi hotspot name and password
+
+```bash
+sudo nano /etc/hostapd/hostapd.conf
+sudo reboot
+```
+
 
 ## Installation of the Pimoroni Automation HAT
 
@@ -36,7 +43,7 @@ cd automation-hat
 ```
 
 
-## Installation of the server
+## Installation of the API server
     
 ```bash
 source ~/.virtualenvs/pimoroni/bin/activate
@@ -66,7 +73,6 @@ sudo cp linux/kiosk/kiosk.service /etc/systemd/system/kiosk.service
 sudo cp linux/kiosk/server.service /etc/systemd/system/server.service
 sudo systemctl enable kiosk
 sudo systemctl enable server
-sudo cp linux/kiosk/.xsession ~/
 sudo reboot
 ```
 
