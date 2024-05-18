@@ -1,1 +1,1 @@
-sleep 10 && DISPLAY=:0 xrandr --output HDMI-2 --same-as HDMI-1 &
+sleep 9 && DISPLAY=:0 xrandr --output HDMI-2 --same-as HDMI-1 &

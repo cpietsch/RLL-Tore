@@ -4,7 +4,9 @@ After=network.target
 
 [Service]
 User=root
+WorkingDirectory=/home/pi/RLL-Tore/server/
 ExecStart=/home/pi/.virtualenvs/pimoroni/bin/python /home/pi/RLL-Tore/server/server.py
+Restart=always
 
 [Install]
 WantedBy=multi-user.target
