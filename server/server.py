@@ -17,7 +17,6 @@ st_abs_file_path = os.path.join(script_dir, "static/")
 app = FastAPI()
 
 DATA_FILE = os.path.join(script_dir, "data.json")
-DEBOUNCE = 1
 
 class Question(BaseModel):
     id: int
@@ -29,6 +28,7 @@ class Question(BaseModel):
 class Data(BaseModel):
     active: int = 0
     last_id: int = 0
+    debounce: float = 1.0
     questions: List[Question] = []
 
 
@@ -99,7 +99,7 @@ async def input_counter_loop():
         tor1 = automationhat.input.one.read()
         tor2 = automationhat.input.two.read()
 
-        if tor1 and tor1_state.state == 0 and time.time() - tor1_state.time > DEBOUNCE:
+        if tor1 and tor1_state.state == 0 and time.time() - tor1_state.time > data.debounce:
             tor1_state.count += 1
             tor1_state.last = time.time()
             # print("TOR1: {}".format(tor1_state.count))
@@ -114,7 +114,7 @@ async def input_counter_loop():
             tor1_state.time = time.time()
             tor1_state.state = tor1
 
-        if tor2 and tor2_state.state == 0 and time.time() - tor2_state.time > DEBOUNCE:
+        if tor2 and tor2_state.state == 0 and time.time() - tor2_state.time > data.debounce:
             tor2_state.count += 1
             tor2_state.last = time.time()
             # print("TOR2: {}".format(tor2_state.count))
@@ -169,8 +169,10 @@ async def websocket_endpoint(websocket: WebSocket):
                     q for q in data.questions if q.id != question_id]
             elif action == "set_active":
                 data.active = message["id"]
-                # tor1_state = VoteState(count=get_yes_no(data)["yes"])
-                # tor2_state = VoteState(count=get_yes_no(data)["no"])
+            
+            elif action == "set_debounce":
+                data.debounce = message["debounce"]
+                print("DEBOUNCE: {}".format(data.debounce))
 
             save_data(data)
             # Broadcast updated data

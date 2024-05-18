@@ -126,6 +126,12 @@
             <select id="delete"></select>
             <button type="submit">Delete Question</button>
         </form>
+
+        <form id="debounce_form">
+            <label for="debounce">Debounce</label>
+            <input type="number" id="debounce" placeholder="Debounce" required step="0.01">
+            <button type="submit">Debounce</button>
+        </form>
     </div>
 
 
@@ -181,6 +187,8 @@
 
             document.getElementById("yes").value = data.questions[0].yes;
             document.getElementById("no").value = data.questions[0].no;
+
+            document.getElementById("debounce").value = data.debounce;
         };
 
         document.getElementById("form").onsubmit = function (event) {
@@ -213,6 +221,12 @@
             }
             let delete_question = document.getElementById("delete").value;
             ws.send(JSON.stringify({ action: "delete_question", id: parseInt(delete_question) }));
+        };
+
+        document.getElementById("debounce_form").onsubmit = function (event) {
+            event.preventDefault();
+            let debounce = document.getElementById("debounce").value;
+            ws.send(JSON.stringify({ action: "set_debounce", debounce: parseFloat(debounce) }));
         };
 
     </script>
