@@ -64,9 +64,9 @@
         }
 
         #active_form button {
-            background-color: #f0fff0;
+            /* background-color: #f0fff0;
             border: 1px solid #64e823;
-            color: #276308;
+            color: #276308; */
         }
 
         #questions {
@@ -170,6 +170,11 @@
 
         document.getElementById("delete_form").onsubmit = function (event) {
             event.preventDefault();
+            // open dialog to confirm delete
+            dialog = confirm("Are you sure you want to delete this question?");
+            if (!dialog) {
+                return;
+            }
             let delete_question = document.getElementById("delete").value;
             ws.send(JSON.stringify({ action: "delete_question", id: parseInt(delete_question) }));
         };

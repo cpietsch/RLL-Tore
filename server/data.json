@@ -3,16 +3,10 @@
   "last_id": 16,
   "questions": [
     {
-      "id": 15,
-      "question": "M\u00f6gen Sie Bananen?",
-      "yes": 10,
-      "no": 10
-    },
-    {
       "id": 16,
       "question": "Sollte Krieg illegal sein?",
-      "yes": 12,
-      "no": 5
+      "yes": 22,
+      "no": 21
     }
   ]
 }
