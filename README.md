@@ -1,5 +1,10 @@
 # RLL-Tore
 
+## Webinterface WIFI Hotspot
+
+- WLAN name: tor
+- WLAN PW: raumlichtlabor
+- Webinterface: http://tor.local
 
 ## Installation of Hotspot on the Raspberry Pi Bullseye
 
@@ -16,6 +21,13 @@ cat linux/hotspot/dhcpcd.conf >> /etc/dhcpcd.conf
 sudo systemctl unmask hostapd
 sudo systemctl enable hostapd
 sudo systemctl enable dnsmasq
+sudo reboot
+```
+
+## Change wifi hotspot name and password
+
+```bash
+sudo nano /etc/hostapd/hostapd.conf
 sudo reboot
 ```
 
@@ -36,7 +48,7 @@ cd automation-hat
 ```
 
 
-## Installation of the server
+## Installation of the API server
     
 ```bash
 source ~/.virtualenvs/pimoroni/bin/activate
@@ -66,7 +78,6 @@ sudo cp linux/kiosk/kiosk.service /etc/systemd/system/kiosk.service
 sudo cp linux/kiosk/server.service /etc/systemd/system/server.service
 sudo systemctl enable kiosk
 sudo systemctl enable server
-sudo cp linux/kiosk/.xsession ~/
 sudo reboot
 ```
 
@@ -74,4 +85,13 @@ Open Chromium manually
     
 ```bash
 DISPLAY=:0 /usr/bin/chromium-browser --noerrdialogs --disable-infobars --app="http://localhost:8000/screen.html" --user-data-dir=$(mktemp -d) --enable-features=OverlayScrollbar  --disable-pinch --kiosk 
+```
+
+
+## SSH into the Raspberry Pi
+
+PW: hanshans
+
+```bash
+ssh -l pi tor.local
 ```
