@@ -1,19 +1,43 @@
 {
-  "active": 16,
-  "last_id": 17,
-  "debounce": 1,
+  "active": 36,
+  "last_id": 36,
+  "debounce": 1.0,
   "questions": [
     {
-      "id": 16,
-      "question": "Sollte Krieg illegal sein?",
-      "yes": 61,
-      "no": 60
+      "id": 28,
+      "question": "Wird KI jemals ethisch bessere Entscheidungen als der Mensch treffen? \nWill AI ever make better ethical decisions than humans? ",
+      "yes": 3,
+      "no": 10
     },
     {
-      "id": 17,
-      "question": "asdads",
-      "yes": 2,
-      "no": 0
+      "id": 29,
+      "question": "W\u00fcrdest du dich von einem Roboter pflegen lassen?  \nWould you let a robot take care of you?  ",
+      "yes": 250,
+      "no": 176
+    },
+    {
+      "id": 31,
+      "question": "Verdienst du zu viel Geld?  \nAre you making too much money? \n",
+      "yes": 39,
+      "no": 93
+    },
+    {
+      "id": 32,
+      "question": "K\u00f6nnen Demos \u00c4nderungen bewirken?   \nCan demonstrations lead to political change? ",
+      "yes": 647,
+      "no": 135
+    },
+    {
+      "id": 33,
+      "question": "Brauchen wir mehr Staat beim Klimaschutz? \nIs climate change only stoppable by law and control? ",
+      "yes": 509,
+      "no": 89
+    },
+    {
+      "id": 36,
+      "question": "Verlernen wir durch Technologien zu lernen?\nAre we \"forgetting\" how to learn things through the use of technology? ",
+      "yes": 125,
+      "no": 115
     }
   ]
 }
