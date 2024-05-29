@@ -18,6 +18,7 @@ app = FastAPI()
 
 DATA_FILE = os.path.join(script_dir, "data.json")
 
+
 class Question(BaseModel):
     id: int
     question: str
@@ -76,7 +77,8 @@ def get_yes_no(data: Data) -> Dict:
             break
     return {"yes": yes, "no": no}
 
-async def add_vote_active(yes = 0, no = 0):
+
+async def add_vote_active(yes=0, no=0):
     for q in data.questions:
         if q.id == data.active:
             q.yes += yes
@@ -93,6 +95,7 @@ connections = Connections()
 tor1_state = VoteState(count=get_yes_no(data)["yes"])
 tor2_state = VoteState(count=get_yes_no(data)["no"])
 
+
 async def input_counter_loop():
     # global tor1_state, tor2_state
     while True:
@@ -103,11 +106,11 @@ async def input_counter_loop():
             tor1_state.count += 1
             tor1_state.last = time.time()
             # print("TOR1: {}".format(tor1_state.count))
-            automationhat.light.warn.on()
+            # automationhat.light.warn.on()
             await add_vote_active(yes=1)
 
         if tor1_state.last and time.time() - tor1_state.last > 0.5:
-            automationhat.light.warn.off()
+            # automationhat.light.warn.off()
             tor1_state.last = 0
 
         if tor1 != tor1_state.state:
@@ -118,11 +121,11 @@ async def input_counter_loop():
             tor2_state.count += 1
             tor2_state.last = time.time()
             # print("TOR2: {}".format(tor2_state.count))
-            automationhat.light.comms.on()
+            # automationhat.light.comms.on()
             await add_vote_active(no=1)
 
         if tor2_state.last and time.time() - tor2_state.last > 0.5:
-            automationhat.light.comms.off()
+            # automationhat.light.comms.off()
             tor2_state.last = 0
 
         if tor2 != tor2_state.state:
@@ -131,10 +134,12 @@ async def input_counter_loop():
 
         await asyncio.sleep(0.02)
 
+
 @app.on_event("startup")
 async def start_background_tasks():
     # Start the input counter loop in the background
     asyncio.create_task(input_counter_loop())
+
 
 @app.websocket("/ws")
 async def websocket_endpoint(websocket: WebSocket):
@@ -169,7 +174,7 @@ async def websocket_endpoint(websocket: WebSocket):
                     q for q in data.questions if q.id != question_id]
             elif action == "set_active":
                 data.active = message["id"]
-            
+
             elif action == "set_debounce":
                 data.debounce = message["debounce"]
                 print("DEBOUNCE: {}".format(data.debounce))
@@ -186,4 +191,4 @@ async def websocket_endpoint(websocket: WebSocket):
 app.mount("/", StaticFiles(directory=st_abs_file_path, html=True), name="static")
 
 if __name__ == "__main__":
-    uvicorn.run("server:app", host="0.0.0.0", port=80, reload=True)
+    uvicorn.run("server:app", host="0.0.0.0", port=80, workers=1, reload=False)

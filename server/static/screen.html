@@ -19,17 +19,20 @@
             overflow: hidden;
             justify-content: center;
             align-items: center;
-            font-size: 5em;
+            font-size: 7em;
             background-color: #000;
             color: #fff;
             font-weight: bold;
-            padding: 3em;
+            padding: 1em;
             box-sizing: border-box;
+            text-align: center;
+            gap: 0.9em;
         }
 
         .count {
             position: absolute;
-            display: flex;
+            /* display: flex; */
+            display: none;
             flex-direction: column;
             justify-content: center;
             align-items: center;
@@ -86,38 +89,46 @@
 
     <script>
         let ws = new WebSocket("ws://tor.local/ws");
+        // let ws = new WebSocket("ws://localhost/ws");
         let last_yes = -1;
         let last_no = -1;
 
         ws.onmessage = function (event) {
             let data = JSON.parse(event.data);
             let active = data.active;
+            console.log(data);
 
             let questions = document.getElementById("question");
             let active_question = data.questions.find(q => q.id === active);
-            questions.innerHTML = active_question.question;
+            questions.innerHTML = "";
+            let multiline_question = active_question.question.split("\n")
 
-            if (last_yes !== active_question.yes) {
-                last_yes = active_question.yes;
-                let yes = document.getElementById("yes");
-                yes.innerHTML = active_question.yes;
-                // trigger animation
-                yes.classList.add("animate");
-                setTimeout(() => {
-                    yes.classList.remove("animate");
-                }, 1000);
+            for (let i = 0; i < multiline_question.length; i++) {
+                let div = document.createElement("div");
+                div.innerHTML = multiline_question[i];
+                questions.appendChild(div);
             }
+            // if (last_yes !== active_question.yes) {
+            //     last_yes = active_question.yes;
+            //     let yes = document.getElementById("yes");
+            //     yes.innerHTML = active_question.yes;
+            //     // trigger animation
+            //     yes.classList.add("animate");
+            //     setTimeout(() => {
+            //         yes.classList.remove("animate");
+            //     }, 1000);
+            // }
 
-            if (last_no !== active_question.no) {
-                last_no = active_question.no;
-                let no = document.getElementById("no");
-                no.innerHTML = active_question.no;
-                // trigger animation
-                no.classList.add("animate");
-                setTimeout(() => {
-                    no.classList.remove("animate");
-                }, 1000);
-            }
+            // if (last_no !== active_question.no) {
+            //     last_no = active_question.no;
+            //     let no = document.getElementById("no");
+            //     no.innerHTML = active_question.no;
+            //     // trigger animation
+            //     no.classList.add("animate");
+            //     setTimeout(() => {
+            //         no.classList.remove("animate");
+            //     }, 1000);
+            // }
 
         };
 

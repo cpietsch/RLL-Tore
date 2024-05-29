@@ -107,7 +107,7 @@
 
         <form id="form">
             <label for="question">Add New Question</label>
-            <input type="text" id="question" placeholder="Enter your question" required>
+            <textarea id="question" placeholder="Enter your question" required rows="4"></textarea>
             <button type="submit">Add Question</button>
         </form>
 
@@ -137,6 +137,7 @@
 
     <script>
         let ws = new WebSocket("ws://tor.local/ws");
+        // let ws = new WebSocket("ws://localhost/ws");
         ws.onmessage = function (event) {
             let data = JSON.parse(event.data);
             let active = data.active;
