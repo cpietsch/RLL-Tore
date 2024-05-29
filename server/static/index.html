@@ -89,10 +89,32 @@
             border-width: 3px;
             background-color: #f0fff0;
         }
+
+        .disconnected {
+            color: red;
+            background: #f9f9f9;
+            padding: 10px;
+            width: 100%;
+            text-align: center;
+            height: 100%;
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 1000;
+        }
+
+        .hidden {
+            display: none;
+        }
     </style>
 </head>
 
 <body>
+    <div id="disconnected" class="disconnected">
+        <p>Disconnected from Tor.</p>
+        <p>Make sure you are connected to the Tor wifi-network.</p>
+        <button onclick="location.reload()">Reload</button>
+    </div>
     <div id="container">
         <h1>Tor Admin</h1>
         <div id="questions"></div>
@@ -136,8 +158,20 @@
 
 
     <script>
-        let ws = new WebSocket("ws://tor.local/ws");
-        // let ws = new WebSocket("ws://localhost/ws");
+        //let url = "ws://localhost/ws"
+        let url = "ws://tor.local/ws"
+
+        let ws = new WebSocket(url);
+
+        ws.onopen = function () {
+            document.getElementById("disconnected").classList.add("hidden");
+            console.log("Connected to Tor");
+        };
+        ws.onclose = function () {
+            document.getElementById("disconnected").classList.remove("hidden");
+        };
+
+
         ws.onmessage = function (event) {
             let data = JSON.parse(event.data);
             let active = data.active;
