@@ -1,0 +1,200 @@
+    1  ls
+    2  ls -al
+    3  mkdir .ssh
+    4  cd .ssh/
+    5  nano authorized_keys
+    6  chmod 0666 authorized_keys 
+    7  chmod 0644 authorized_keys 
+    8  ls -al
+    9  ls
+   10  cd ..
+   11  exit
+   12  ls
+   13  sudo apt-get update 
+   14  sudo apt-get upgrade
+   15  sudo apt-get install hostapd dnsmasq
+   16  sudo nano /etc/hostapd/hostapd.conf
+   17  sudo nano /etc/dnsmasq.conf
+   18  sudo nano /etc/network/interfaces
+   19  cd /etc/network/interfaces.d/
+   20  ls
+   21  ls -al
+   22  cd ..
+   23  ls
+   24  less interfaces.new 
+   25  cd interfaces.d/
+   26  nano wlan0
+   27  sudo nano wlan0
+   28  sudo systemctl unmask hostapd
+   29  sudo systemctl enable hostapd
+   30  sudo systemctl enable dnsmasq
+   31  sudo systemctl unmask hostapd
+   32  sudo systemctl enable dnsmasq
+   33  sudo systemctl unmask hostapd
+   34  sudo reboot
+   35  sudo nano /etc/dhcpcd.conf
+   36  sudo nano /etc/network/interfaces
+   37  cd /etc/network/interfaces.d/
+   38  ls
+   39  ls -al
+   40  sudo nano /etc/hostapd/hostapd.conf
+   41  sudo nano /etc/default/hostapd
+   42  sudo nano /etc/dnsmasq.conf
+   43  sudo reboot
+   44  ls
+   45  ping google.de
+   46  ls
+   47  sudo nano /etc/dnsmasq.conf
+   48  sudo nano /etc/default/hostapd
+   49  ls
+   50  git
+   51  sudo raspi-config nonint do_i2c 0
+   52  git clone https://github.com/pimoroni/automation-hat
+   53  cd automation-hat/
+   54  ./install.sh
+   55  sudo reboot
+   56  ls
+   57  git clone https://github.com/cpietsch/RLL-Tore
+   58  cd RLL-Tore
+   59  ls
+   60  sudo nano /etc/hostapd/hostapd.conf
+   61  cd automation-hat/examples/
+   62  ls
+   63  source ~/.virtualenvs/pimoroni/bin/activate
+   64  ls
+   65  cd hat
+   66  ls
+   67  python input.py 
+   68  source ~/.virtualenvs/pimoroni/bin/activate
+   69  cd server/
+   70  python test-input.py 
+   71  git config --global user.email "cpietsch@gmail.com"
+   72  git config --global user.name "Christopher Pietsch"
+   73  python test-input.py 
+   74  screen
+   75  sudo apt-get install screen
+   76  screen
+   77  source ~/.virtualenvs/pimoroni/bin/activate
+   78  python test-input.py 
+   79  sudo nano /boot/config.txt
+   80  sudo reboot
+   81  sudo nano /boot/config.txt
+   82  sudo reboot
+   83  sudo nano /boot/config.txt
+   84  less /usr/share/plymouth/themes/pix/splash.png
+   85  sudo DISPLAY:=0 xrandr --output OUTPUT1 --same-as OUTPUT2
+   86  sudo xrandr --output OUTPUT1 --same-as OUTPUT2
+   87  sudo DISPLAY=:0 xrandr --output OUTPUT1 --same-as OUTPUT2
+   88  sudo nano /boot/config.txt
+   89  ls
+   90  cp /usr/share/plymouth/themes/pix/splash.png linux/
+   91  sudo apt-get install unclutter
+   92  mv linux/kiosk/splash.png /usr/share/plymouth/themes/pix/splash.png
+   93  sudo mv linux/kiosk/splash.png /usr/share/plymouth/themes/pix/splash.png
+   94  sudo nano /etc/xdg/autostart/display.desktop
+   95  sudo raspi-config 
+   96  sudo raspi-config
+   97  sudo nano /boot/config.txt
+   98  sudo reboot
+   99  sudo raspi-config
+  100  sudo reboot
+  101  ls
+  102  sudo raspi-config
+  103  cd server/
+  104  ls
+  105  source ~/.virtualenvs/pimoroni/bin/activate
+  106  python server.py 
+  107  pip install fastapi
+  108  python server.py 
+  109  pip install asynccontextmanager
+  110  python server.py 
+  111  cd server/
+  112  source ~/.virtualenvs/pimoroni/bin/activate
+  113  python test-input.py 
+  114  python test-server.py 
+  115  sudo python test-server.py 
+  116  python test-server.py 
+  117  pip install asyncio
+  118  python test-server.py 
+  119  curl -fsSL https://tailscale.com/install.sh | sh
+  120  sudo tailscale up
+  121  sudo xrandr
+  122  sudo DISPLAY=:0 xrandr
+  123  export XAUTHORITY=/home/pi/.Xauthority 
+  124  export DISPLAY=:0
+  125  sudo xrandr
+  126  sudo xrandr --output HDMI-2 --same-as HDMI-1
+  127  sudo nano /etc/xdg/autostart/display.desktop
+  128  sudo reboot
+  129  DISPLAY=:0 /usr/bin/chromium-browser --noerrdialogs --disable-infobars --app="http://localhost:8000/screen" --user-data-dir=$(mktemp -d) --enable-features=OverlayScrollbar  --disable-pinch --kiosk 
+  130  DISPLAY=:0 /usr/bin/chromium-browser --noerrdialogs --disable-infobars --app="http://localhost:8000/screen" .html--user-data-dir=$(mktemp -d) --enable-features=OverlayScrollbar  --disable-pinch --kiosk 
+  131  DISPLAY=:0 /usr/bin/chromium-browser --noerrdialogs --disable-infobars --app="http://localhost:8000/screen.html" --user-data-dir=$(mktemp -d) --enable-features=OverlayScrollbar  --disable-pinch --kiosk 
+  132  sudo rm /etc/xdg/autostart/display.desktop
+  133  nano .xsession-errors
+  134  sudo nano /etc/xdg/lxsession/LXDE-pi/autostart 
+  135  sudo nano /etc/xdg/lxsession/LXDE-pi/autostart
+  136  sudo reboot
+  137  sudo nano /etc/xdg/lxsession/LXDE-pi/autostart
+  138  cat ~/.config/lxsession/LXDE-pi/autostart
+  139  sudo nanno .xsessionrc
+  140  sudo nano .xsessionrc
+  141  sudo nano /etc/xdg/lxsession/LXDE-pi/autostart
+  142  sudo nano .xsessionrc
+  143  sudo reboot
+  144  sudo nano .xsessionrc
+  145  sudo nano /etc/xdg/lxsession/LXDE-pi/autostart
+  146  sudo reboot
+  147  sudo nano /etc/xdg/lxsession/LXDE-pi/autostart
+  148  sudo nano .xsessionrc
+  149  cd ..
+  150  ls
+  151  /home/pi/.virtualenvs/pimoroni/bin/python /home/pi/RLL-Tore/server/server.py 
+  152  sudo /home/pi/.virtualenvs/pimoroni/bin/python /home/pi/RLL-Tore/server/server.py 
+  153  less /etc/systemd/system/server.service
+  154  sudo cp linux/kiosk/kiosk.service /etc/systemd/system/kiosk.service
+  155  ls
+  156  cd RLL-Tore/
+  157  sudo cp linux/kiosk/kiosk.service /etc/systemd/system/kiosk.service
+  158  sudo cp linux/kiosk/server.service /etc/systemd/system/server.service
+  159  sudo systemctl enable kiosk
+  160  sudo systemctl enable server
+  161  sudo reboot
+  162  ls 
+  163  ls -al
+  164  less .xsession
+  165  less .xsessionrc 
+  166  sudo reboot
+  167  sudo nano /etc/systemd/system/server.service
+  168  sudo reboot
+  169  sudo shutdown now
+  170  exit
+  171  ls
+  172  sudo nano /etc/systemd/system/server.service
+  173  sudo nano /etc/systemd/system/kiosk.service 
+  174  xset
+  175  cd
+  176  nano .xsession
+  177  nano .xsessionrc 
+  178  sudo nano .xsessionrc 
+  179  sudo reboot
+  180  exit
+  181  sudo shutdown now
+  182  sudo raspi-config
+  183  sudo reboot
+  184  DISPLAY=:0 xrandr --output HDMI-2 --same- as HDMI-1
+  185  DISPLAY=:0 xrandr --output HDMI-2 --same-as HDMI-1
+  186  sudo reboot
+  187  reboot
+  188  sudo reboot
+  189  DISPLAY=:0 xrandr --output HDMI-2 --same-as HDMI-1
+  190  sudo reboot
+  191  sudo reboot 
+  192  exit
+  193  cd RLL-Tore/
+  194  ls
+  195  git status
+  196  history
+  197  ping google.de
+  198  nano .xsessionrc
+  199  ls
+  200  history > history.txt
