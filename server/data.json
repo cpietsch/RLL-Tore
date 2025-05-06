@@ -1,13 +1,13 @@
 {
-  "active": 36,
-  "last_id": 36,
+  "active": 41,
+  "last_id": 41,
   "debounce": 1.0,
   "questions": [
     {
       "id": 28,
       "question": "Wird KI jemals ethisch bessere Entscheidungen als der Mensch treffen? \nWill AI ever make better ethical decisions than humans? ",
-      "yes": 3,
-      "no": 10
+      "yes": 110,
+      "no": 136
     },
     {
       "id": 29,
@@ -18,8 +18,8 @@
     {
       "id": 31,
       "question": "Verdienst du zu viel Geld?  \nAre you making too much money? \n",
-      "yes": 39,
-      "no": 93
+      "yes": 71,
+      "no": 177
     },
     {
       "id": 32,
@@ -36,8 +36,38 @@
     {
       "id": 36,
       "question": "Verlernen wir durch Technologien zu lernen?\nAre we \"forgetting\" how to learn things through the use of technology? ",
-      "yes": 125,
-      "no": 115
+      "yes": 132,
+      "no": 119
+    },
+    {
+      "id": 37,
+      "question": "F\u00f6rdern Technologien soziale Ungleichheit?\nDo technologies promote social inequality?",
+      "yes": 0,
+      "no": 0
+    },
+    {
+      "id": 38,
+      "question": "F\u00f6rdern Technologien soziale Ungleichheit?\nDo technologies promote social inequality?",
+      "yes": 258,
+      "no": 142
+    },
+    {
+      "id": 39,
+      "question": "Do androids dream of electric sheep?\n(zwinkizwonki ; ))",
+      "yes": 0,
+      "no": 0
+    },
+    {
+      "id": 40,
+      "question": "Do androids dream of electric sheep?zwinkizwonki ; )",
+      "yes": 0,
+      "no": 0
+    },
+    {
+      "id": 41,
+      "question": "Do androids dream of electric sheep?\nzwinkizwonki ; )",
+      "yes": 22,
+      "no": 21
     }
   ]
 }
