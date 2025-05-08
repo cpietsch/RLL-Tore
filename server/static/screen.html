@@ -19,7 +19,7 @@
             overflow: hidden;
             justify-content: center;
             align-items: center;
-            font-size: 7em;
+            font-size: 8em;
             background-color: #000;
             color: #fff;
             font-weight: bold;
@@ -31,31 +31,40 @@
 
         .count {
             position: absolute;
-            /* display: flex; */
+            display: flex;
             display: none;
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            font-size: 4em;
             color: #000;
             font-weight: bold;
             padding: 1em;
-            position: absolute;
             width: 100px;
             height: 100px;
             border-radius: 4em;
         }
 
+        .count .label {
+            font-size: 0.5em;
+            color: #000;
+            font-weight: bold;
+        }
+        .count .value {
+            font-size: 2em;
+            color: #000;
+            font-weight: bold;
+        }
+
         #yes {
-            top: -50px;
+            bottom: -50px;
             left: -50px;
-            background-color: #0f0;
+            background-color: #FFF;
         }
 
         #no {
-            top: -50px;
+            bottom: -50px;
             right: -50px;
-            background-color: rgb(220, 35, 220);
+            background-color: #FFF;
         }
 
         @keyframes countAnimation {
@@ -84,8 +93,14 @@
 
 <body>
     <div id="question"></div>
-    <div id="yes" class="count"></div>
-    <div id="no" class="count"></div>
+    <div id="yes" class="count">
+        <div class="label">YES</div>
+        <div class="value">0</div>
+    </div>
+    <div id="no" class="count">
+        <div class="label">NO</div>
+        <div class="value">0</div>
+    </div>
 
     <script>
         let ws = new WebSocket("ws://tor.local/ws");
@@ -108,27 +123,27 @@
                 div.innerHTML = multiline_question[i];
                 questions.appendChild(div);
             }
-            // if (last_yes !== active_question.yes) {
-            //     last_yes = active_question.yes;
-            //     let yes = document.getElementById("yes");
-            //     yes.innerHTML = active_question.yes;
-            //     // trigger animation
-            //     yes.classList.add("animate");
-            //     setTimeout(() => {
-            //         yes.classList.remove("animate");
-            //     }, 1000);
-            // }
+            if (last_yes !== active_question.yes) {
+                last_yes = active_question.yes;
+                let yes = document.getElementById("yes");
+                yes.querySelector(".value").innerHTML = active_question.yes;
+                // trigger animation
+                yes.classList.add("animate");
+                setTimeout(() => {
+                    yes.classList.remove("animate");
+                }, 1000);
+            }
 
-            // if (last_no !== active_question.no) {
-            //     last_no = active_question.no;
-            //     let no = document.getElementById("no");
-            //     no.innerHTML = active_question.no;
-            //     // trigger animation
-            //     no.classList.add("animate");
-            //     setTimeout(() => {
-            //         no.classList.remove("animate");
-            //     }, 1000);
-            // }
+            if (last_no !== active_question.no) {
+                last_no = active_question.no;
+                let no = document.getElementById("no");
+                no.querySelector(".value").innerHTML = active_question.no;
+                // trigger animation
+                no.classList.add("animate");
+                setTimeout(() => {
+                    no.classList.remove("animate");
+                }, 1000);
+            }
 
         };
 

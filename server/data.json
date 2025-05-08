@@ -1,13 +1,13 @@
 {
-  "active": 41,
-  "last_id": 41,
+  "active": 28,
+  "last_id": 42,
   "debounce": 1.0,
   "questions": [
     {
       "id": 28,
       "question": "Wird KI jemals ethisch bessere Entscheidungen als der Mensch treffen? \nWill AI ever make better ethical decisions than humans? ",
       "yes": 110,
-      "no": 136
+      "no": 137
     },
     {
       "id": 29,
@@ -50,18 +50,6 @@
       "question": "F\u00f6rdern Technologien soziale Ungleichheit?\nDo technologies promote social inequality?",
       "yes": 258,
       "no": 142
-    },
-    {
-      "id": 39,
-      "question": "Do androids dream of electric sheep?\n(zwinkizwonki ; ))",
-      "yes": 0,
-      "no": 0
-    },
-    {
-      "id": 40,
-      "question": "Do androids dream of electric sheep?zwinkizwonki ; )",
-      "yes": 0,
-      "no": 0
     },
     {
       "id": 41,
