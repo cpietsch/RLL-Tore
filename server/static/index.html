@@ -159,7 +159,7 @@
 
     <script>
         //let url = "ws://localhost/ws"
-        let url = "ws://tor.local/ws"
+        let url = `ws://${window.location.host}/ws`;
 
         let ws = new WebSocket(url);
 

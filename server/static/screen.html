@@ -103,7 +103,9 @@
     </div>
 
     <script>
-        let ws = new WebSocket("ws://tor.local/ws");
+        let url = `ws://${window.location.host}/ws`;
+        let ws = new WebSocket(url);
+        
         // let ws = new WebSocket("ws://localhost/ws");
         let last_yes = -1;
         let last_no = -1;
