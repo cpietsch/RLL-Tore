@@ -10,6 +10,8 @@ import asyncio
 import automationhat
 from fastapi.staticfiles import StaticFiles
 import os
+import logging
+#from starlette.websockets import WebSocketDisconnect
 
 script_dir = os.path.dirname(__file__)
 st_abs_file_path = os.path.join(script_dir, "static/")
@@ -50,8 +52,19 @@ class Connections():
         self.connections.remove(websocket)
 
     async def broadcast(self, data: Dict):
+        """Broadcast data to all connected clients, removing disconnected ones."""
+        disconnected = []
         for connection in self.connections:
-            await connection.send_json(data)
+            try:
+                await connection.send_json(data)
+            except (WebSocketDisconnect, ConnectionResetError, RuntimeError) as e:
+                logging.info(f"Connection disconnected during broadcast: {e}")
+                disconnected.append(connection)
+
+        # Remove disconnected connections
+        for connection in disconnected:
+            if connection in self.connections:
+                self.connections.remove(connection)
 
 
 def load_data() -> Data:
