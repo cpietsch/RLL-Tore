@@ -13,7 +13,7 @@ tor2_state = { "time": 0, "state": 0, "count": 0, "last": 0 }
 while True:
     tor1 = automationhat.input.one.read()
     tor2 = automationhat.input.two.read()
-
+    print(tor1,tor2);
     if tor1 and tor1_state["state"] == 0 and time.time() - tor1_state["time"] > DEBOUNCE:
         tor1_state["count"] += 1
         tor1_state["last"] = time.time()
