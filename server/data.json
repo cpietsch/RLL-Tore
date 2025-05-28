@@ -1,13 +1,13 @@
 {
-  "active": 45,
-  "last_id": 62,
+  "active": 48,
+  "last_id": 64,
   "debounce": 0.4,
   "questions": [
     {
       "id": 45,
       "question": "Ist j\u00fcngeren Generationen nachhaltige Entwicklung wichtiger als \u00c4lteren?",
-      "yes": 412,
-      "no": 133
+      "yes": 436,
+      "no": 144
     },
     {
       "id": 46,
@@ -18,62 +18,68 @@
     {
       "id": 47,
       "question": "Gibt es Wohlstand auch ohne Ungerechtigkeit?",
-      "yes": 218,
+      "yes": 219,
       "no": 120
     },
     {
       "id": 48,
       "question": "F\u00fchrt Social Media zu mehr Engagement bei (sozialen) Krisen?",
-      "yes": 4,
-      "no": 3
+      "yes": 428,
+      "no": 169
     },
     {
       "id": 49,
       "question": "F\u00fchlst du dich Gleichaltrigen weltweit mehr verbunden als anderen Generationen im eigenen Land?",
-      "yes": 0,
-      "no": 0
+      "yes": 162,
+      "no": 99
     },
     {
       "id": 50,
       "question": "Lernen die Generationen genug voneinander?",
-      "yes": 0,
-      "no": 0
+      "yes": 279,
+      "no": 331
     },
     {
       "id": 51,
       "question": "Geht es dir heute besser als deinen Eltern im gleichen Alter?",
-      "yes": 0,
-      "no": 0
+      "yes": 472,
+      "no": 137
     },
     {
       "id": 52,
       "question": "Ist Selbstverwirklichung wichtiger als Gemeinschaft?",
-      "yes": 0,
-      "no": 0
+      "yes": 535,
+      "no": 560
     },
     {
       "id": 53,
       "question": "Ist Gen Z mental weniger robust als vorherige Genrationen?",
-      "yes": 0,
-      "no": 0
+      "yes": 13,
+      "no": 30
     },
     {
       "id": 54,
       "question": "Bist Du bei politischen \u00c4mtern f\u00fcr eine Altersobergrenze?",
-      "yes": 0,
-      "no": 0
+      "yes": 350,
+      "no": 141
     },
     {
       "id": 55,
       "question": "Sollte es ein Social Media-Verbot f\u00fcr unter 16-j\u00e4hrige geben?",
-      "yes": 0,
-      "no": 0
+      "yes": 404,
+      "no": 309
     },
     {
       "id": 59,
       "question": "Hinterl\u00e4sst Du unseren Nachkommen eine nachhaltigere Welt?\n",
-      "yes": 266,
-      "no": 108
+      "yes": 327,
+      "no": 131
+    },
+    {
+      "id": 63,
+      "question": "Ist Gen Z mental weniger robust als vorherige Generationen?",
+      "yes": 206,
+      "no": 205
     }
   ]
 }
